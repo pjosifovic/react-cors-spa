@@ -1,5 +1,4 @@
 import Head from "next/head";
-import Image from "next/image";
 import styles from "@/styles/Home.module.css";
 
 import logo from "../../public/logo.svg";
@@ -27,6 +26,7 @@ export default function Home() {
             </p>
           </div>
 
+          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={logo.src} className={styles.app_mainlogo} alt="logo" style={{ marginBottom: "32px" }} />
 
           <div style={{ maxWidth: "500px", width: "100%" }}>
