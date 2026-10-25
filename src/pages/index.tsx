@@ -2,15 +2,7 @@ import Head from "next/head";
 import Image from "next/image";
 import styles from "@/styles/Home.module.css";
 
-import useSWR from 'swr'
-
-import logoS3 from '../../public/logoS3.png';
-import logoCF from '../../public/logoCloudFront.png';
-import logo from '../../public/logo.svg';
-
-// To be updated with the Amazon CloudFront distribution domain deployed through the CloudFormation Template
-// You can view this domain in the 'Output' tab of your CloudFormation stack deployment
-const APIEndPoint = 'https://<your-api-domain-name>/v1/hello'
+import logo from "../../public/logo.svg";
 
 export default function Home() {
   return (
@@ -21,65 +13,63 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div
-        className={`${styles.page}`}
-      >
+      <div className={`${styles.page}`}>
         <main className={styles.main}>
-
-          <p>This react-based single page application (SPA) is hosted in an Amazon S3 bucket exposed through an Amazon CloudFront distribution.</p>
-          <p>It calls an API configured in Amazon API Gateway and exposed through the same Amazon CloudFront distribution as the application.</p>
-          <img src={logo.src} className={styles.app_mainlogo} alt="logo"/>
-
-          <HelloWorld/>
-
-          <div className={styles.logos}>
-            <Image
-              className={styles.app_logoR2L}
-              src={logoS3}
-              alt="Amazon S3 logo"
-              priority
-            />
-            <Image
-              className={styles.app_logoL2R}
-              src={logoCF}
-              alt="Amazon CloudFront logo"
-              priority
-            />
+          <div style={{ textAlign: "center", maxWidth: "600px" }}>
+            <h4 style={{ marginBottom: "32px", color: "var(--foreground)" }}>
+              Week 05 - Amplify Deployment
+            </h4>
+            <p style={{ marginBottom: "16px", lineHeight: "1.6" }}>
+              This react-based single page application (SPA) is deployed through AWS Amplify.
+            </p>
+            <p style={{ marginBottom: "32px", lineHeight: "1.6" }}>
+              AWS Amplify provides a hosting solution with built-in CI/CD and deployment capabilities.
+            </p>
           </div>
 
-          <div className={styles.ctas}>
+          <img src={logo.src} className={styles.app_mainlogo} alt="logo" style={{ marginBottom: "32px" }} />
+
+          <div style={{ maxWidth: "500px", width: "100%" }}>
+            <h5 style={{ marginBottom: "16px", fontWeight: "600", textTransform: "uppercase", fontSize: "12px", letterSpacing: "0.05em" }}>
+              Completed Steps
+            </h5>
+            <ol style={{ marginBottom: "32px", paddingLeft: "20px", lineHeight: "1.8" }}>
+              <li>Fork and clone repo</li>
+              <li>Build and push to main branch</li>
+              <li>Configure AWS Amplify project</li>
+              <li>Connect GitHub repository</li>
+              <li>Enable automatic deployments</li>
+            </ol>
+
+            <h5 style={{ marginBottom: "16px", fontWeight: "600", textTransform: "uppercase", fontSize: "12px", letterSpacing: "0.05em" }}>
+              Future Steps
+            </h5>
+            <ol style={{ paddingLeft: "20px", lineHeight: "1.8" }}>
+              <li>Add custom domain</li>
+              <li>Split production and development environments</li>
+            </ol>
+          </div>
+
+          <div className={styles.ctas} style={{ marginTop: "48px" }}>
             <a
               className={styles.primary}
-              href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/Welcome.html"
+              href="https://docs.aws.amazon.com/amplify/latest/userguide/welcome.html"
               target="_blank"
               rel="noopener noreferrer"
             >
-              Read Amazon S3 Documentation
+              AWS Amplify Docs
             </a>
             <a
-              href="https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/Introduction.html"
+              href="https://aws.amazon.com/amplify/"
               target="_blank"
               rel="noopener noreferrer"
               className={styles.secondary}
             >
-              Read Amazon CloudFront Documentation
+              Learn More
             </a>
           </div>
         </main>
       </div>
     </>
   );
-}
-
-const fetcher = (url:string) => fetch(url).then((res) => res.json());
-
-function HelloWorld() {
-  const { data, error } = useSWR(APIEndPoint, fetcher)
- 
-  if (error) return <div>Failed to call REST API: {error.message}</div>
-  if (!data) return <div>Loading...</div>
- 
-  return (
-    <div>{data.message}</div>
-  )
 }
